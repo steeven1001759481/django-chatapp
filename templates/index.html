@@ -1,1 +1,13 @@
-<h1>This is Index page</h1>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<h1 class="title">Chat App</h1>
+
+<div class="main-box">
+    <p>Room Name</p>
+    <input type="text" class="inp"></input>
+    <p>User</p>
+    <input type="text" class="inp"></input>
+    <br>
+    <input type="submit" value="Enter Room" class="btn"></input>
+</div>
