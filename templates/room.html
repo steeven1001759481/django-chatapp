@@ -1,0 +1,14 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<h1 class="title">Room - {{room}}</h1>
+
+<div class="main-box">
+    <form action="" method="">
+        {% csrf_token %}
+        <p>User - {{user}}</p>
+        <input type="textarea" class="message-input"/>
+        <br>
+        <input type="submit" value="Send" class="btn"></input>
+    </form>
+</div>

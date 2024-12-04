@@ -4,10 +4,13 @@
 <h1 class="title">Chat App</h1>
 
 <div class="main-box">
-    <p>Room Name</p>
-    <input type="text" class="inp"></input>
-    <p>User</p>
-    <input type="text" class="inp"></input>
-    <br>
-    <input type="submit" value="Enter Room" class="btn"></input>
+    <form action="checkview" method="POST"> 
+        {% csrf_token %}
+        <p>Room Name</p>
+        <input type="text" class="inp" name="room_name"></input>
+        <p>User</p>
+        <input type="text" class="inp" name="user_name"></input>
+        <br>
+        <input type="submit" value="Enter Room" class="btn"></input>
+    </form>
 </div>
