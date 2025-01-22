@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Room
+from .models import Room, Message
+from django.http import HttpResponse
 
 # Create your views here.
 def indexView(request):
@@ -9,19 +10,27 @@ def checkView(request):
     roomName = request.POST['room_name']
     userName = request.POST['user_name']
     if Room.objects.filter(name=roomName).exists():
-        return redirect('/'+roomName+'/?user_name='+userName)
+        return redirect('chat/'+roomName+'/?user_name='+userName)
     else:
         newRoom = Room.objects.create(name=roomName)
         newRoom.save()
-        return redirect('/'+roomName+'/?user_name='+userName)
+        return redirect('chat/'+roomName+'/?user_name='+userName)
 
 def roomView(request,room):
-    userName = ''
-    if request.GET:
-        userName = request.GET['user_name']
-        print(userName)
+    userName = request.GET.get('user_name')
+    roomName = Room.objects.get(name=room)
     context = {
-        'room': room,
+        'room': roomName,
         'user': userName
     }
     return render(request,'room.html', context)
+
+def send(request):
+    userName = request.POST['username']
+    roomId = request.POST['room_id']
+    message = request.POST['message']
+
+    newMessage = Message.objects.create(value=message,user=userName, room=roomId)
+    newMessage.save()
+
+    return HttpResponse(f"the message is: "+message)

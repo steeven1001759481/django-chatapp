@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.indexView, name='index'),
-    path('<str:room>/', views.roomView, name='room'),
-    path('checkview', views.checkView, name='check')
+    path('chat/<str:room>/', views.roomView, name='room'),
+    path('checkview', views.checkView, name='checkview'),
+    path('send', views.send, name='send')
 ]

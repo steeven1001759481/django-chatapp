@@ -1,14 +1,38 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 
-<h1 class="title">Room - {{room}}</h1>
+<h1 class="title">Room - {{room.name}}</h1>
 
 <div class="main-box">
-    <form action="" method="">
+    <form id = "message-form">
         {% csrf_token %}
         <p>User - {{user}}</p>
-        <input type="textarea" class="message-input"/>
+        <input type="hidden" class="inp" id ="user_name" name="user_name" value="{{user}}">
+        <input type="hidden" class="inp" id ="room_id" name="room_id" value="{{room.id}}">
+        <input type="textarea" class="message-input" id="message" name="message"/>
         <br>
         <input type="submit" value="Send" class="btn"></input>
     </form>
 </div>
+
+<script type="text/javascript">
+    $(document).on('submit', '#message-form', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: '/send',
+            data: {
+                username: $('#user_name').val(),
+                room_id: $('#room_id').val(),
+                message: $('#message').val(),
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+            },
+            success: function (data) {
+                alert(data)
+            }
+        });
+        document.getElementById('message').value = ''
+    });
+</script>
